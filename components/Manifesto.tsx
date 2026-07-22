@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 // Large statement whose words fade from dim to full as the user scrolls
 // through — the classic Locomotive word-reveal pattern.
 const TEXT =
-  "We build stories from light, motion and sound — chasing the single frame where craft becomes";
+  "We design the rhythm around the work — image, motion, sound and interface moving toward the one frame where craft becomes";
 const ACCENT = "feeling";
-const TAIL = ", and a brand starts to breathe on its own.";
+const TAIL = ", and the brand starts to move on its own.";
 
 export default function Manifesto() {
   const root = useRef<HTMLElement>(null);
@@ -55,9 +55,15 @@ export default function Manifesto() {
     <section
       ref={root}
       id="manifesto"
-      className="hairline-t px-5 py-[clamp(6rem,16vh,12rem)] md:px-10"
+      className="hairline-t relative overflow-hidden px-5 py-[clamp(6rem,16vh,12rem)] md:px-10"
     >
-      <span className="micro-label mb-10 block">Manifesto</span>
+      <div className="pointer-events-none absolute top-10 right-5 hidden text-[18vw] font-black leading-none text-text/[0.025] md:block">
+        2016
+      </div>
+      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <span className="micro-label block">Manifesto</span>
+        <span className="micro-label block text-text">Motion has to mean something</span>
+      </div>
       <p
         ref={para}
         className="max-w-5xl text-[clamp(1.75rem,5vw,4rem)] font-semibold leading-[1.15] tracking-tight"
@@ -66,6 +72,13 @@ export default function Manifesto() {
         {renderWords(ACCENT, true)}
         {renderWords(TAIL)}
       </p>
+      <div className="mt-16 grid gap-px bg-hairline md:grid-cols-3">
+        {["Idea before effect", "Craft in every format", "One team, one system"].map((item) => (
+          <span key={item} className="micro-label bg-background p-5 text-text">
+            {item}
+          </span>
+        ))}
+      </div>
     </section>
   );
 }

@@ -49,6 +49,12 @@ export default function ContactFooter() {
       className="hairline-t relative overflow-hidden px-5 pt-24 pb-10 md:px-10 md:pt-40"
     >
       <div ref={inner}>
+        <div className="mb-12 grid gap-4 border-y border-hairline py-5 md:grid-cols-3">
+          <span className="micro-label text-text">New productions / Q3 open</span>
+          <span className="micro-label text-text">Remote direction worldwide</span>
+          <span className="micro-label text-text md:text-right">Response within 24h</span>
+        </div>
+
         <a
           href="mailto:hello@kadraj.studio"
           className="group block w-fit"

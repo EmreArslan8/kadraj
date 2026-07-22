@@ -1,18 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0b0b0c;
-  --text: #edeae4;
-  --muted: #8a867e;
+  --background: #080807;
+  --surface: #11100e;
+  --text: #f1eee7;
+  --muted: #969088;
   --accent: #ff4d00;
-  --hairline: rgba(237, 234, 228, 0.14);
+  --acid: #d8ff3f;
+  --steel: #8ba4a8;
+  --hairline: rgba(241, 238, 231, 0.16);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-text: var(--text);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
+  --color-acid: var(--acid);
+  --color-steel: var(--steel);
   --color-hairline: var(--hairline);
   --font-display: var(--font-archivo);
   --font-serif: var(--font-instrument);
@@ -32,6 +38,19 @@ body {
   font-family: var(--font-archivo), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  cursor: default;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 78% 12%, rgba(255, 77, 0, 0.12), transparent 28rem),
+    linear-gradient(120deg, rgba(139, 164, 168, 0.08), transparent 36%),
+    var(--background);
 }
 
 ::selection {
@@ -65,7 +84,7 @@ body {
   font-weight: 800;
   font-stretch: 125%;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 0.92;
 }
 
@@ -77,6 +96,13 @@ body {
   text-transform: none;
   letter-spacing: 0.01em;
   color: var(--accent);
+}
+
+.frame-corner {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-color: rgba(241, 238, 231, 0.45);
 }
 
 .hairline-t {

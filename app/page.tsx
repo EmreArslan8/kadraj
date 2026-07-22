@@ -7,6 +7,8 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import SelectedWork from "@/components/SelectedWork";
+import CaseStudyTeaser from "@/components/CaseStudyTeaser";
+import Capabilities from "@/components/Capabilities";
 import Manifesto from "@/components/Manifesto";
 import StatsClients from "@/components/StatsClients";
 import ContactFooter from "@/components/ContactFooter";
@@ -24,6 +26,8 @@ export default function Home() {
         <Hero start={ready} />
         <Marquee />
         <SelectedWork />
+        <CaseStudyTeaser />
+        <Capabilities />
         <Manifesto />
         <StatsClients />
         <ContactFooter />
