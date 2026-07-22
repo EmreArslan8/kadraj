@@ -33,7 +33,7 @@ export default function Hero({ start }: { start: boolean }) {
       if (bg.current) {
         gsap.fromTo(
           bg.current,
-          { scale: 1.08 },
+          { scale: 1.025 },
           { scale: 1, duration: 2.4, ease: "power2.out" }
         );
       }

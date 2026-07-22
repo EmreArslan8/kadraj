@@ -59,14 +59,23 @@ const MediaSlot = forwardRef<HTMLVideoElement, MediaSlotProps>(function MediaSlo
         <video
           ref={ref}
           className={`absolute inset-0 h-full w-full object-cover ${innerClassName}`}
+          suppressHydrationWarning
           muted
           loop
           playsInline
           preload={preload}
           poster={`/media/${src}.jpg`}
         >
-          <source src={`/media/${src}.webm`} type="video/webm" />
-          <source src={`/media/${src}.mp4`} type="video/mp4" />
+          <source
+            src={`/media/${src}.mp4`}
+            type="video/mp4"
+            suppressHydrationWarning
+          />
+          <source
+            src={`/media/${src}.webm`}
+            type="video/webm"
+            suppressHydrationWarning
+          />
         </video>
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">
