@@ -39,16 +39,16 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
 
       tl.from(".pre-letter", {
         yPercent: 120,
-        stagger: 0.06,
-        duration: 0.7,
+        stagger: 0.035,
+        duration: 0.38,
         ease: "power4.out",
       })
         .to(
           count,
           {
             v: 100,
-            duration: 1.6,
-            ease: "power2.inOut",
+            duration: 0.65,
+            ease: "power2.out",
             onUpdate: () => {
               if (counterRef.current) {
                 counterRef.current.textContent = String(
@@ -62,10 +62,10 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
         // Curtain lifts up to reveal the hero underneath.
         .to(root.current, {
           yPercent: -100,
-          duration: 0.9,
+          duration: 0.45,
           ease: "power4.inOut",
         })
-        .to(".pre-content", { autoAlpha: 0, duration: 0.3 }, "<");
+        .to(".pre-content", { autoAlpha: 0, duration: 0.18 }, "<");
     }, root);
 
     return () => ctx.revert();
