@@ -13,14 +13,15 @@ interface Project {
   category: string;
   year: string;
   hue: number;
+  src: string;
 }
 
 const PROJECTS: Project[] = [
-  { index: "01", title: "NEON HARVEST", category: "Campaign Film", year: "2025", hue: 12 },
-  { index: "02", title: "VELVET / CHROME", category: "Brand Identity", year: "2024", hue: 260 },
-  { index: "03", title: "ORBIT", category: "Product CGI", year: "2024", hue: 200 },
-  { index: "04", title: "AFTERGLOW", category: "Music Video", year: "2023", hue: 330 },
-  { index: "05", title: "TERRA", category: "Documentary", year: "2023", hue: 90 },
+  { index: "01", title: "NEON HARVEST", category: "Campaign Film", year: "2025", hue: 12, src: "work-01" },
+  { index: "02", title: "VELVET / CHROME", category: "Brand Identity", year: "2024", hue: 260, src: "work-02" },
+  { index: "03", title: "ORBIT", category: "Product CGI", year: "2024", hue: 200, src: "work-03" },
+  { index: "04", title: "AFTERGLOW", category: "Music Video", year: "2023", hue: 330, src: "work-04" },
+  { index: "05", title: "TERRA", category: "Documentary", year: "2023", hue: 90, src: "work-05" },
 ];
 
 // Pinned section: a horizontal track of project cards scrubbed by vertical
@@ -29,6 +30,33 @@ export default function SelectedWork() {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const progress = useRef<HTMLSpanElement>(null);
+
+  // Lazily start the card videos (preload="none") as the section approaches,
+  // so they don't download until needed. Posters stand in under reduced-motion.
+  useLayoutEffect(() => {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduced || !root.current) return;
+
+    const videos = Array.from(
+      root.current.querySelectorAll<HTMLVideoElement>("video")
+    );
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLVideoElement).play().catch(() => {});
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "400px 0px" }
+    );
+    videos.forEach((v) => io.observe(v));
+
+    return () => io.disconnect();
+  }, []);
 
   useLayoutEffect(() => {
     const reduced = window.matchMedia(
@@ -68,10 +96,13 @@ export default function SelectedWork() {
         gsap.utils.toArray<HTMLElement>(".work-inner").forEach((inner) => {
           parallax.push(
             gsap.fromTo(
+              // scale set here so the translate never reveals an edge
+              // (GSAP's inline transform would otherwise drop the CSS scale).
               inner,
-              { xPercent: -8 },
+              { xPercent: -8, scale: 1.1 },
               {
                 xPercent: 8,
+                scale: 1.1,
                 ease: "none",
                 scrollTrigger: {
                   trigger: root.current,
@@ -113,6 +144,8 @@ export default function SelectedWork() {
           >
             <div className="overflow-hidden">
               <MediaSlot
+                src={p.src}
+                preload="none"
                 label={`${p.title} — ${p.category}`}
                 ratio="4/5"
                 hue={p.hue}

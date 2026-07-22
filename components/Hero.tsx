@@ -11,6 +11,7 @@ export default function Hero({ start }: { start: boolean }) {
   const root = useRef<HTMLElement>(null);
   const headline = useRef<HTMLHeadingElement>(null);
   const bg = useRef<HTMLDivElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
 
   useLayoutEffect(() => {
     if (!start) return;
@@ -18,6 +19,12 @@ export default function Hero({ start }: { start: boolean }) {
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+
+    // Showreel autoplays once the hero is revealed — unless reduced-motion,
+    // where the poster image stands in.
+    if (!reduced && video.current) {
+      video.current.play().catch(() => {});
+    }
 
     const ctx = gsap.context(() => {
       if (reduced) return;
@@ -73,7 +80,14 @@ export default function Hero({ start }: { start: boolean }) {
     >
       {/* Full-bleed showreel background */}
       <div ref={bg} className="absolute inset-0">
-        <MediaSlot label="VIDEO — SHOWREEL" hue={18} className="h-full w-full" />
+        <MediaSlot
+          ref={video}
+          src="hero"
+          preload="metadata"
+          label="VIDEO — SHOWREEL"
+          hue={18}
+          className="h-full w-full"
+        />
       </div>
       {/* Cinematic darkening gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/70" />
